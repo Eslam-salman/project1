@@ -5,9 +5,10 @@ import UsereForm from './UserForm';
 
 class Tabel extends Component {
   state={
-    firstname:'',lastname:'',email:'',Password:'',created_at:''
+    firstname:" ",lastname:" ",email:" ",Password:"",created_at:" "
    ,user:[]
   }
+  
   componentDidMount() {
     const apiUrl ='http://167.86.81.129:8080/Aqar/get_all_users';
 
@@ -25,8 +26,10 @@ class Tabel extends Component {
       )
   }
 
-  delete(index) {
+  delete(e,index) {
+    e.preventDefault();
     // delete entity - DELETE
+   
     console.log(index);
    
     // deletes entities
@@ -45,22 +48,69 @@ class Tabel extends Component {
       console.log(err);
     });
   }
+  
+  handelFname =(e) =>{
+    let Ncurrent =e.target.value
+   this.setState(
+     {
+       firstname:Ncurrent
+       
+     }
+    
+   )
+   console.log(this.state.firstname)
+ }
 
-  update(e) {
+ handelLname =(e) =>{
+   let Ncurrent =e.target.value
+   this.setState(
+     {
+       lastname: Ncurrent
+     }
+   )
+ }
+ handelemail =(e) =>{
+   let Ncurrent =e.target.value
+   this.setState(
+     {
+       email: Ncurrent
+     }
+   )
+ }
+ handelpass =(e) =>{
+   let Ncurrent =e.target.value
+   this.setState(
+     {
+       Password: Ncurrent
+     }
+   )
+ }
+ handeltime =(e) =>{
+   let Ncurrent =e.target.value
+   this.setState(
+     {
+       created_at: Ncurrent
+     }
+   )
+ }
+
+
+  update(e,index) {
     // update entity - PUT
     e.preventDefault();
-
+   
     // this will update entries with PUT
     fetch("http://167.86.81.129:8080/Aqar/update_user", {
         "method": "PUT",
         
         "body": JSON.stringify({
-          firstName: this.state.firstname,
-          lastName: this.state.lastname,
-          password: this.state.Password,
-          email: this.state.email,
-          created_at: this.state.created_at,
-         
+          id:index,
+          firstName:this.state.firstname,
+          lastName:this.state.lastname,
+          password:this.state.Password,
+          email:this.state.email,
+          created_at:this.state.created_at,
+        
 
         })
         })
@@ -71,68 +121,31 @@ class Tabel extends Component {
   }
 
 
-  handelFname =(e) =>{
-     let Ncurrent =e.target.value
-    this.setState(
-      {
-        firstname:Ncurrent
-        
-      }
-     
-    )
-    console.log(this.state.firstname)
-  }
-
-  handelLname =(e) =>{
-    let Ncurrent =e.target.value
-    this.setState(
-      {
-        lastname: Ncurrent
-      }
-    )
-  }
-  handelemail =(e) =>{
-    let Ncurrent =e.target.value
-    this.setState(
-      {
-        email: Ncurrent
-      }
-    )
-  }
-  handelpass =(e) =>{
-    let Ncurrent =e.target.value
-    this.setState(
-      {
-        Password: Ncurrent
-      }
-    )
-  }
-  handeltime =(e) =>{
-    let Ncurrent =e.target.value
-    this.setState(
-      {
-        created_at: Ncurrent
-      }
-    )
-  }
-
-
-
-
-
-
-  handelAdd =(e) =>{
+  create(e) {
+    // add entity - POST
     e.preventDefault();
-  let newCurrent=this.state.currant;
-  let newdata=this.state.data;
-  newdata.push({newCurrent});
-  this.setState({
-    data:newdata,
-    currant:" "
-  })
-  
-  
+    // creates entity
+    fetch("http://167.86.81.129:8080/Aqar/add_user", {
+      "method": "POST",
+      
+      "body": JSON.stringify({
+        firstName:this.state.firstname,
+        lastName:this.state.lastname,
+        password:this.state.Password,
+        email:this.state.email,
+        created_at:this.state.created_at,
+      })
+    })
+    .then(response => response.json())
+    .then(response => {
+      console.log(response)
+    })
+    .catch(err => {
+      console.log(err);
+    });
   }
+
+
   
 
   
@@ -144,7 +157,7 @@ class Tabel extends Component {
     const{user}=this.state;
     const UserListm= user.map((user,index)=>{
       return(
-        <UserList details={user} key={index}update={this.update} delete={this.delete} handelFname={this.handelFname} handelLname={this.handelLname}
+        <UserList details={user} key={index}update={this.update}index={user.id} delete={this.delete} handelFname={this.handelFname} handelLname={this.handelLname}
         handelemail={this.handelemail} handeltime={this.handeltime}/>
         
       )

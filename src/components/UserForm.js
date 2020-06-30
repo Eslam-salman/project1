@@ -16,12 +16,12 @@ const useStyles = makeStyles((theme) => ({
 
   const UserForm = (props) =>{
      return (
-    <form onSubmit={props.handelAdd}>
-        <TextField required id="standard-required" label="Required"onChange={props.handelChang} defaultValue="First Name" />
-        <TextField required id="standard-required" label="Required"onChange={props.handelChang} defaultValue="Last Name" />
-        <TextField required id="standard-required" label="Required"onChange={props.handelChang} defaultValue="Email" />
-        <TextField required id="standard-required" label="Required"onChange={props.handelChang} defaultValue="Password" />
-        <TextField required id="standard-required" label="Required"onChange={props.handelChang} defaultValue="Time" />
+    <form onSubmit={(e)=>props.create(e)}>
+        <TextField required id="standard-required" label="Required"onChange={props.handelFname} defaultValue="First Name" />
+        <TextField required id="standard-required" label="Required"onChange={props.handelLname} defaultValue="Last Name" />
+        <TextField required id="standard-required" label="Required"onChange={props.handelemail} defaultValue="Email" />
+        <TextField required id="standard-required" label="Required"onChange={props.handelpass} defaultValue="Password" />
+        <TextField required id="standard-required" label="Required"onChange={props.handeltime} defaultValue="Time" />
 
         <Button
         type="submit"

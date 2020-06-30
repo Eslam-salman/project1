@@ -50,7 +50,7 @@ class UserList extends Component{
               <StyledTableCell align="right">{this.props.details.created_at}</StyledTableCell>
               <StyledTableCell align="right"><Button variant="contained" color="primary"onClick={()=>this.toggleState()}>
               Edit User</Button></StyledTableCell>
-              <StyledTableCell align="right"><Button variant="contained" onClick={()=>this.props.delete(this.props.index)} color="secondary" startIcon={<DeleteIcon />}
+              <StyledTableCell align="right"><Button variant="contained" onClick={(e)=>this.props.delete(e,this.props.index)} color="secondary" startIcon={<DeleteIcon />}
       >
         Delete
       </Button></StyledTableCell>
@@ -81,18 +81,17 @@ handelmodefy=(e)=>{
         
         <Paper>
        
-        <form onSubmit={(e)=>this.props.update(e)}>
+        <form onSubmit={(e)=>this.props.update(e,this.props.details.id)}>
         <TextField ref={(v) =>{this.input=v}} defaultValue={this.props.details.firstName}onChange={this.props.handelFname} type="text"/>
-        <TextField ref={(v) =>{this.input=v}} defaultValue={this.props.details.lastName} type="text" onChange={ this.props.handelLname}/>
-        <TextField ref={(v) =>{this.input=v}} defaultValue={this.props.details.email} type="text" onChange={ this.props.handelemail}/>
+        <TextField ref={(v) =>{this.input=v}} defaultValue={this.props.details.lastName} type="text" onChange={this.props.handelLname}/>
+        <TextField ref={(v) =>{this.input=v}} defaultValue={this.props.details.email} type="text" onChange={this.props.handelemail}/>
         <TextField ref={(v) =>{this.input=v}} defaultValue={this.props.details.Password} type="text" onChange={this.props.handelpass}/>
-        <TextField ref={(v) =>{this.input=v}} defaultValue={this.props.details.created_at} type="text" onChange={ this.props.handeltime}/>
+        <TextField ref={(v) =>{this.input=v}} defaultValue={this.props.details.created_at} type="text" onChange={this.props.handeltime}/>
         <Button
         type="submit"
         variant="contained"
         color="primary"
         size="small"
-        onSubmit={(e)=>this.props.update(e)}
         startIcon={<SaveIcon />}
       >
         Save
