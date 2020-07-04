@@ -4,11 +4,23 @@ import UsereForm from './UserForm';
 
 
 class Tabel extends Component {
-  state={
-    firstname:" ",lastname:" ",email:" ",Password:"",created_at:" "
-   ,user:[]
+
+  constructor(props) {
+    super(props);
+
+    this.state={
+      firstname:null,lastname:null,email:null,password:null,created_at:null
+     ,user:[]
+    }
+
+    this.handelFname = this.handelFname.bind(this);
+    this.handelLname = this.handelLname.bind(this);
+    this.handelemail = this.handelemail.bind(this);
+    this.handelpass = this.handelpass.bind(this);
+    this.handeltime = this.handeltime.bind(this);
+    this.update = this.update.bind(this);
+    
   }
-  
   componentDidMount() {
     const apiUrl ='http://167.86.81.129:8080/Aqar/get_all_users';
 
@@ -43,6 +55,7 @@ class Tabel extends Component {
     .then(response => response.json())
     .then(response => {
       console.log(response);
+      window.location.reload(false);
     })
     .catch(err => {
       console.log(err);
@@ -81,7 +94,7 @@ class Tabel extends Component {
    let Ncurrent =e.target.value
    this.setState(
      {
-       Password: Ncurrent
+       password: Ncurrent
      }
    )
  }
@@ -95,29 +108,74 @@ class Tabel extends Component {
  }
 
 
-  update(e,index) {
+  update(e,index,Fname,Lname,emaill,pass) {
     // update entity - PUT
     e.preventDefault();
+   if (this.state.firstname===null){
+    this.setState(
+      {
+        firstname:Fname
+        
+      })
+   }
+   if (this.state.lastname===null){
+    this.setState(
+      {
+        lastname:Lname
+        
+      })
+   }
+   if (this.state.Password===null){
+    this.setState(
+      {
+        password:pass
+        
+      })
+   }
+   if (this.state.email===null){
+    this.setState(
+      {
+        email:emaill
+        
+      })
+   }
    
+   
+console.log(this.state.email)
     // this will update entries with PUT
     fetch("http://167.86.81.129:8080/Aqar/update_user", {
-        "method": "PUT",
-        
+        "method": "POST",
+        "mode": "cors", // no-cors, *cors, same-origin
+        "headers": {
+          "content-type": "application/json",
+          "accept": "application/json"
+        },
         "body": JSON.stringify({
           id:index,
           firstName:this.state.firstname,
           lastName:this.state.lastname,
-          password:this.state.Password,
-          email:this.state.email,
-          created_at:this.state.created_at,
-        
-
+          password:"123456",
+          email:this.state.email                
         })
         })
         .then(response => response.json())
-        .then(response => { console.log(response);
+        .then(response => {console.log(response);
+          this.setState(
+            {
+              firstname:null,
+              lastname:null,
+              email:null,
+              password:null
+              
+            })
+
+          window.location.reload(false);
         })
         .catch(err => { console.log(err); });
+       
+
+      
+       
   }
 
 
@@ -129,10 +187,10 @@ class Tabel extends Component {
       "method": "POST",
       
       "body": JSON.stringify({
-        firstName:this.state.firstname,
-        lastName:this.state.lastname,
-        password:this.state.Password,
-        email:this.state.email,
+        firstName: this.state.firstname,
+        lastName: this.state.lastname,
+        password: this.state.password,
+        email: this.state.email,
         created_at:this.state.created_at,
       })
     })

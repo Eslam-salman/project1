@@ -74,7 +74,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimpleTabs() {
+export default function 
+SimpleTabs() {
 
 
 

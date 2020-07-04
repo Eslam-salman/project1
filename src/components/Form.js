@@ -4,9 +4,20 @@ import Paper from '@material-ui/core/Paper';
 
 
 class Form extends Component {
-  state={
-    firstname:'',lastname:'',email:'',Password:'',created_at:''
-   ,user:[]
+  constructor(props) {
+    super(props);
+
+    this.state={
+      firstname:null,lastname:null,email:null,Password:null,created_at:null
+     ,user:[]
+    }
+
+    this.handelFname = this.handelFname.bind(this);
+    this.handelLname = this.handelLname.bind(this);
+    this.handelemail = this.handelemail.bind(this);
+    this.handelpass = this.handelpass.bind(this);
+    this.handeltime = this.handeltime.bind(this);
+    this.create = this.create.bind(this);
   }
   componentDidMount() {
     const apiUrl ='http://167.86.81.129:8080/Aqar/get_all_users';
@@ -81,18 +92,23 @@ class Form extends Component {
     // creates entity
     fetch("http://167.86.81.129:8080/Aqar/add_user", {
       "method": "POST",
-      
+      "headers": {
+    "x-rapidapi-host": "167.86.81.129:8080",
+    "content-type": "application/json",
+    "accept": "application/json"
+  },
       "body": JSON.stringify({
         firstName:this.state.firstname,
         lastName:this.state.lastname,
-        password:this.state.Password,
-        email:this.state.email,
-        created_at:this.state.created_at,
+        password:"123456",
+        email:this.state.email
+        
       })
     })
     .then(response => response.json())
     .then(response => {
-      console.log(response)
+      console.log(response);
+      window.location.reload(false);
     })
     .catch(err => {
       console.log(err);
